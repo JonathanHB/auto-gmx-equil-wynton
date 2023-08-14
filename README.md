@@ -1,0 +1,1 @@
+# auto-gmx-equil-wynton

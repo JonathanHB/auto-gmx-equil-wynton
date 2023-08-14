@@ -1,0 +1,53 @@
+[jborowsky@dev1 input_structures]$ 
+module load mpi
+module load Sali
+module load cuda/10.0.130
+/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx make_ndx -f step5_input.gro 
+  0 System              : 92446 atoms
+  1 Protein             :  4680 atoms
+  2 Protein-H           :  2319 atoms
+  3 C-alpha             :   297 atoms
+  4 Backbone            :   891 atoms
+  5 MainChain           :  1187 atoms
+  6 MainChain+Cb        :  1454 atoms
+  7 MainChain+H         :  1475 atoms
+  8 SideChain           :  3205 atoms
+  9 SideChain-H         :  1132 atoms
+ 10 Prot-Masses         :  4680 atoms
+ 11 non-Protein         : 87766 atoms
+ 12 Other               : 87766 atoms
+ 13 TLCL2               :   720 atoms
+ 14 POPC                : 27872 atoms
+ 15 SOD                 :    53 atoms
+ 16 CLA                 :    66 atoms
+ 17 TIP3                : 59055 atoms
+
+ nr : group      '!': not  'name' nr name   'splitch' nr    Enter: list groups
+ 'a': atom       '&': and  'del' nr         'splitres' nr   'l': list residues
+ 't': atom type  '|': or   'keep' nr        'splitat' nr    'h': help
+ 'r': residue              'res' nr         'chain' char
+ "name": group             'case': case sensitive           'q': save and quit
+ 'ri': residue index
+
+> 1|13|14
+
+Copied index group 1 'Protein'
+Copied index group 13 'TLCL2'
+Merged two groups with OR: 4680 720 -> 5400
+Copied index group 14 'POPC'
+Merged two groups with OR: 5400 27872 -> 33272
+
+ 18 Protein_TLCL2_POPC  : 33272 atoms
+
+> 15|16|17
+
+Copied index group 15 'SOD'
+Copied index group 16 'CLA'
+Merged two groups with OR: 53 66 -> 119
+Copied index group 17 'TIP3'
+Merged two groups with OR: 119 59055 -> 59174
+
+ 19 SOD_CLA_TIP3        : 59174 atoms
+
+> q   
+

@@ -1,0 +1,1 @@
+/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx trjconv -s eq19.tpr -f eq19.trr -pbc whole -o eq19-whole2.xtc

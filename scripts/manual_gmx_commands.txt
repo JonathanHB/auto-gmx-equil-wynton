@@ -1,0 +1,5 @@
+module load mpi
+module load Sali
+module load cuda/10.0.130
+
+/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx
