@@ -1,21 +1,35 @@
-upperdir2="/wynton/home/grabe/jborowsky/aac1/04-equil"
-output_folder = "run_scripts/"
+import os
+
+cwd = os.getcwd()
+run_index = cwd.split("/")[-1][3:]
+
+input_folder = "input"
+output_folder = "run_scripts/" # the folder to which to output the generated scripts, not the folder for md output
+run_folder = "run_directory"
+
+if not os.path.isdir(output_folder):
+	os.mkdir(output_folder)
+if not os.path.isdir(run_folder):
+	os.mkdir(run_folder)
+
+#upperdir2="/wynton/home/grabe/jborowsky/aac1/04-equil"
 
 gmx = "/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx"
 
-sim_command_minim = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -r {inp}.gro -p {upperdir}/input_structures/topol.top -n {upperdir}/input_structures/index.ndx -maxwarn 2 \n\
-{gmx} mdrun -v -deffnm {current} -ntomp 4 -ntmpi 1"
+sim_command_minim = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -r {inp}.gro -p ../{input_folder}/topol.top -n ../{input_folder}/index.ndx -maxwarn 2 \n\
+{gmx} mdrun -v -deffnm {current} -ntomp 8 -ntmpi 1"
 
-sim_command_equil = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -r {inp}.gro -p {upperdir}/input_structures/topol.top -n {upperdir}/input_structures/index.ndx -maxwarn 2 \n\
-{gmx} mdrun -v -deffnm {current} -ntomp 4 -ntmpi 1 -nb gpu -bonded gpu -pme gpu"
+sim_command_equil = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -r {inp}.gro -p ../{input_folder}/topol.top -n ../{input_folder}/index.ndx -maxwarn 2 \n\
+{gmx} mdrun -v -deffnm {current} -ntomp 8 -ntmpi 1 -nb gpu -bonded gpu -pme gpu"
 
-sim_command_prod  = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -t {previous}.cpt -p {upperdir}/input_structures/topol.top -n {upperdir}/input_structures/index.ndx -maxwarn 1 \n\
-{gmx} mdrun -v -deffnm {current} -ntomp 4 -ntmpi 1 -nb gpu -bonded gpu -pme gpu"
+sim_command_prod  = "{gmx} grompp -f {upperdir}/mdp/{mdp} -o {current}.tpr -c {previous}.gro -t {previous}.cpt -p ../{input_folder}/topol.top -n ../{input_folder}/index.ndx -maxwarn 1 \n\
+{gmx} mdrun -v -deffnm {current} -ntomp 8 -ntmpi 1 -nb gpu -bonded gpu -pme gpu"
 
 file_prefix = 'step'
 mdp_suffix = '_minimization.mdp'
 file_suffix = '_run_cmd.csh'
-initial_structure = '%s/input_structures/step5_input' % upperdir2
+initial_structure = "../%s/step5_input" % input_folder 
+#'%s/input_structures/step5_input' % upperdir2
 
 #Step names file:
 runs_file = 'run_commands.txt'
@@ -26,10 +40,11 @@ runs_file = 'run_commands.txt'
 #sim_prefix = 'minimization'
 previous_sim = initial_structure
 current_sim = "minimization"
-current_mdp="minimcharmm36.mdp" #file_prefix+current_sim+mdp_suffix
+current_mdp="minimcharmm36.mdp" 
+#file_prefix+current_sim+mdp_suffix
 
 with open(output_folder+file_prefix+current_sim+file_suffix, 'w') as f:
-	f.write(sim_command_minim.format(gmx = gmx, upperdir = upperdir2, mdp=current_mdp, current=current_sim, previous=previous_sim, inp=initial_structure))
+	f.write(sim_command_minim.format(gmx = gmx, upperdir = cwd+"/..", mdp=current_mdp, current=current_sim, previous=previous_sim, inp=initial_structure, input_folder=input_folder))
 with open(output_folder+runs_file, 'a') as f:
 	f.write(file_prefix+current_sim+file_suffix+'\n')
 
@@ -48,7 +63,7 @@ for i in range(0,len(mdp_files)):
 	current_sim="eq"+str(i)
 	current_mdp = mdp_files[i] #file_prefix+current_sim+mdp_suffix 
 	with open(output_folder+file_prefix+current_sim+file_suffix, 'w') as f:
-		f.write(sim_command_equil.format(gmx = gmx, upperdir = upperdir2, mdp=current_mdp, current=current_sim, previous=previous_sim, inp=initial_structure))
+		f.write(sim_command_equil.format(gmx = gmx, upperdir = cwd+"/..", mdp=current_mdp, current=current_sim, previous=previous_sim, inp=initial_structure, input_folder=input_folder))
 	with open(output_folder+runs_file, 'a') as f:
 		f.write(file_prefix+current_sim+file_suffix+'\n')
 	previous_sim = current_sim
@@ -72,7 +87,11 @@ for i in range(10):
 	current_sim = str(i).zfill(3)
 	
 	with open(output_folder+file_prefix+current_sim+file_suffix, 'w') as f:
-		f.write(sim_command_prod.format(gmx = gmx, upperdir = upperdir2, mdp=current_mdp, current=current_sim, previous=previous_sim))	
+		f.write(sim_command_prod.format(gmx = gmx, upperdir = cwd+"/..", mdp=current_mdp, current=current_sim, previous=previous_sim, input_folder=input_folder))	
 	with open(output_folder+runs_file, 'a') as f:
 		f.write(file_prefix+current_sim+file_suffix+'\n')
 	previous_sim = current_sim
+
+os.chdir(output_folder)
+#print("qsub < ../../scripts/launch_job_array.sh %s" % run_index)
+os.system("qsub ../../scripts/launch_job_array.sh %s" % run_index) #with the arrow the script fails to process its argument

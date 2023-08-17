@@ -46111,45 +46111,45 @@ PROA	     3
 
 ; Include Position restraint file
 #ifdef POSRES_MINIM
-#include "../../../MinEq_scripts/aac1_all_2000.itp"
+#include "../../equil-restraints/aac1_all_2000.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NVT
-#include "../../../MinEq_scripts/aac1_all_2000.itp"
+#include "../../equil-restraints/aac1_all_2000.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT01
-#include "../../../MinEq_scripts/aac1_all_2000.itp"
+#include "../../equil-restraints/aac1_all_2000.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT02
-#include "../../../MinEq_scripts/aac1_all_2000.itp"
+#include "../../equil-restraints/aac1_all_2000.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT03
-#include "../../../MinEq_scripts/aac1_bb_2000_sc_1000.itp"
+#include "../../equil-restraints/aac1_bb_2000_sc_1000.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT04
-#include "../../../MinEq_scripts/aac1_bb_1000_sc_400.itp"
+#include "../../equil-restraints/aac1_bb_1000_sc_400.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT05
-#include "../../../MinEq_scripts/aac1_bb_400_sc_200.itp"
+#include "../../equil-restraints/aac1_bb_400_sc_200.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT06
-#include "../../../MinEq_scripts/aac1_bb_200_sc_20.itp"
+#include "../../equil-restraints/aac1_bb_200_sc_20.itp"
 #endif
 
 ; Include Position restraint file
 #ifdef POSRES_NPT07
-#include "../../../MinEq_scripts/aac1_bb_20_sc_0.itp"
+#include "../../equil-restraints/aac1_bb_20_sc_0.itp"
 #endif

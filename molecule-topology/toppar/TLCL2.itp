@@ -2293,13 +2293,13 @@ TLCL2	     3
 
 ; Include Position restraint file
 #ifdef POSRES_NVT
-#include "../../../MinEq_scripts/tlcl2_hgroup_400.itp"
+#include "../../equil-restraints/tlcl2_hgroup_400.itp"
 #endif
 
 #ifdef POSRES_NPT01
-#include "../../../MinEq_scripts/tlcl2_hgroup_80.itp"
+#include "../../equil-restraints/tlcl2_hgroup_80.itp"
 #endif
 
 #ifdef POSRES_NPT02
-#include "../../../MinEq_scripts/tlcl2_hgroup_16.itp"
+#include "../../equil-restraints/tlcl2_hgroup_16.itp"
 #endif

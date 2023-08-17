@@ -18,7 +18,7 @@ hostname
 ## GPU/CPU stuff
 GMX_CPUS=3
 export CUDA_VISIBLE_DEVICES=$SGE_GPU
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=8
 echo $CUDA_VISIBLE_DEVICES
 echo $OMP_NUM_THREADS
 
@@ -38,8 +38,7 @@ export GMX_GPU_DD_COMMS=true
 export GMX_GPU_PME_PP_COMMS=true
 export GMX_FORCE_UPDATE_DEFAULT_GPU=true
 
-
-upperdir="/wynton/home/grabe/jborowsky/aac1/04-equil"
+upperdir="/wynton/home/grabe/jborowsky/aac1/auto-gmx-equil-wynton/run$1"
  
 readarray -t run_array < ${upperdir}/run_scripts/run_commands.txt
 #run_array=( $(ls -t run_scripts/) )
