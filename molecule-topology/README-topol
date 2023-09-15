@@ -1,1 +1,3 @@
 insert the text in topol-restraints into topol.top between the include statements pointing to toppar and the [ system ] section
+ref-topol.top is for aac1 in a pure popc bilayer with 3 tlcl2 and na and cl ions and tip3p water:wq
+
