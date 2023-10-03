@@ -39,7 +39,7 @@ DispCorr            = no ; only needed for lipid monolayers
 ; temperature and pressure
 tcoupl              = berendsen ; EQUIL ONLY
 ; tc-grps             = Protein_Lipid   Water_and_ions	; three coupling groups
-tc-grps             = Protein_TLCL2_POPC   SOD_CLA_TIP3	; three coupling groups
+tc-grps             = Protein_TLCL2_DNF_POPC   SOD_CLA_TIP3	; three coupling groups
 tau-t               = 1.0   1.0 ; time constant, in ps
 ref-t               = 310.15   310.15 ; reference temperature, one for each group, in K
 

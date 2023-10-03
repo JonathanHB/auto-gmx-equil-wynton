@@ -1,0 +1,1 @@
+/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx trjcat -f eq*.trr -o eq_run08.trr -cat

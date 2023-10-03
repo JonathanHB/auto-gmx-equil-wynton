@@ -1,0 +1,20 @@
+#ifdef POSRES_NVT
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       400       400       400
+#endif
+
+#ifdef POSRES_NPT01
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       80       80       80
+#endif
+
+#ifdef POSRES_NPT02
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       16       16       16
+#endif

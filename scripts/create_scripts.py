@@ -6,7 +6,7 @@ run_index = cwd.split("/")[-1][3:]
 input_folder = "input"
 output_folder = "run_scripts/" # the folder to which to output the generated scripts, not the folder for md output
 run_folder = "run_directory"
-mdpdir = "mdp"
+mdpdir = "mdp-aac1-adp"
 
 if not os.path.isdir(output_folder):
 	os.mkdir(output_folder)
@@ -61,13 +61,22 @@ mdp_files = ["nvtcharmm36.mdp", "npt01charmm36.mdp",  "npt02charmm36.mdp",  "npt
 #n_equil_steps = len(mdp_files)-1
 
 for i in range(0,len(mdp_files)):
-	current_sim="eq"+str(i)
+	current_sim="eq" + str(i).zfill(2)
 	current_mdp = mdp_files[i] #file_prefix+current_sim+mdp_suffix 
 	with open(output_folder+file_prefix+current_sim+file_suffix, 'w') as f:
 		f.write(sim_command_equil.format(gmx = gmx, upperdir = cwd+"/..", mdpdir=mdpdir, mdp=current_mdp, current=current_sim, previous=previous_sim, inp=initial_structure, input_folder=input_folder))
 	with open(output_folder+runs_file, 'a') as f:
 		f.write(file_prefix+current_sim+file_suffix+'\n')
 	previous_sim = current_sim
+
+#concatenate and remove pbc from trajectories
+with open(output_folder+"trjcat_trjconv"+file_suffix, 'w') as f:
+	f.write("/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx trjcat -f eq*.trr -o eq-run%s.xtc -cat" % run_index)
+	#f.write(f"/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx trjconv -s eq0.tpr -f eq-run{run_index}.xtc -pbc whole -o eq-{run_index}-whole.xtc")
+with open(output_folder+runs_file, 'a') as f:
+        f.write("trjcat_trjconv"+file_suffix+'\n')
+
+#/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx trjcat -f eq*.trr -o eq_run08.trr -cat
 
 #Step 6.7_0-10: long equilibration broken into segments sharing an mdp file
 #sim_prefix = '6.7_'

@@ -8,7 +8,7 @@
 ##$ -l hostname=cc-idgpu[4] #-- request the RTX 2080 Ti nodes
 #$ -N WE_H_a
 ##$ -pe mpi_onehost 4     #we want 4 mpi nodes on 1 gpu
-#$ -t 1-250              # number to run at a time
+#$ -t 1-21              # number to run at a time
 #$ -tc 1              # how many to run at a time
 
 

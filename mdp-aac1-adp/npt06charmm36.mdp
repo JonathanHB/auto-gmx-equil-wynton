@@ -1,0 +1,55 @@
+; npt equillibration with restraints #6
+; charmm-gui recommended params for CHARMM36 membrane simulations with GROMACS
+
+define              = -DPOSRES_NPT06
+continuation        = yes
+gen_vel             = no
+
+; integrator
+integrator          = md
+nsteps              = 150000 ; 2 * 150000 = 300 ps
+dt                  = 0.002 ; 2 fs
+
+; output control
+nstxout             = 5000 ; 10 ps
+nstvout             = 5000 ; 10 ps
+nstcalcenergy       = 500 ; 1 ps
+nstenergy           = 5000 ; 10 ps
+nstlog              = 5000 ; 10 ps
+
+; bonded force parameters
+constraint_algorithm    = lincs
+constraints             = h-bonds
+lincs_iter              = 1 ; accuracy of LINCS
+lincs_order             = 4 ; also related to accuracy
+
+; nonbonded force parameters
+nstlist             = 20
+cutoff-scheme       = Verlet
+ns_type             = grid
+coulombtype         = PME
+pme_order           = 4
+fourierspacing      = 0.12 ; minimum, GROMACS scales this when using -tunepme (default on)
+rcoulomb            = 1.2 ; minimum, GROMACS scales this when using -tunepme (default on)
+vdwtype             = cutoff
+vdw-modifier        = Force-switch ; CHARMM requires Force-switch for vdw
+rvdw-switch         = 1.0 ; start vdw switching
+rvdw                = 1.2 ; finish vdw switching
+DispCorr            = no ; only needed for lipid monolayers
+
+; temperature and pressure
+tcoupl              = berendsen ; EQUIL ONLY
+; tc-grps             = Protein_Lipid   Water_and_ions	; three coupling groups
+tc-grps             = Protein_TLCL2_ADP_POPC   SOD_CLA_TIP3	; three coupling groups
+tau-t               = 1.0   1.0 ; time constant, in ps
+ref-t               = 310.15   310.15 ; reference temperature, one for each group, in K
+
+pcoupl              = berendsen ; EQUIL ONLY
+pcoupltype          = semiisotropic ; scale xy together for membrane
+tau-p               = 5.0 ; time constant, in ps
+ref-p               = 1.01325   1.01325 ; reference pressure, in bar
+compressibility     = 4.5e-5    4.5e-5 ; isothermal compressibility of water, bar^-1
+refcoord-scaling    = com ; move the restraints centers as the box size changes
+
+; boundary conditions
+pbc                 = xyz ; 3-D PBC

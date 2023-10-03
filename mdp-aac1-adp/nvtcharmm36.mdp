@@ -1,0 +1,53 @@
+; nvt equilibration with restraints
+; charmm-gui recommended params for CHARMM36 membrane simulations with GROMACS
+
+define              = -DPOSRES_NVT
+continuation        = no ; first dynamics
+
+; integrator
+integrator          = md
+nsteps              = 12500 ; 2 * 12500 = 25 ps
+dt                  = 0.002 ; 2 fs
+
+; output control
+nstxout             = 500 ; 1 ps
+nstvout             = 500 ; 1 ps
+nstenergy           = 500 ; 1 ps
+nstlog              = 500 ; 1 ps
+
+; bonded force parameters
+constraint_algorithm    = lincs
+constraints             = h-bonds
+lincs_iter              = 1 ; accuracy of LINCS
+lincs_order             = 4 ; also related to accuracy
+
+; nonbonded force parameters
+nstlist             = 20
+cutoff-scheme       = Verlet
+ns_type             = grid
+coulombtype         = PME
+pme_order           = 4
+fourierspacing      = 0.12 ; minimum, GROMACS scales this when using -tunepme (default on)
+rcoulomb            = 1.2 ; minimum, GROMACS scales this when using -tunepme (default on)
+vdwtype             = cutoff
+vdw-modifier        = Force-switch ; CHARMM requires Force-switch for vdw
+rvdw-switch         = 1.0 ; start vdw switching
+rvdw                = 1.2 ; finish vdw switching
+DispCorr            = no ; only needed for lipid monolayers
+
+; temperature and pressure
+tcoupl              = berendsen ; EQUIL ONLY
+; tc-grps             = Protein_Lipid   Water_and_ions	; three coupling groups
+tc-grps             = Protein_TLCL2_ADP_POPC   SOD_CLA_TIP3	; three coupling groups
+tau-t               = 1.0   1.0 ; time constant, in ps
+ref-t               = 310.15   310.15 ; reference temperature, one for each group, in K
+
+pcoupl              = no ; no pressure coupling in NVT
+
+; boundary conditions
+pbc                 = xyz
+
+; velocity generation
+gen-vel             = yes ; assign velocities from Maxwell distribution
+gen-temp            = 315.0 ; temperature for Maxwell distribution
+gen-seed            = -1 ; generate a random seed

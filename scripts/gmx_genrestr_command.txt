@@ -1,0 +1,1 @@
+/wynton/home/grabe/shared/gromacs/gromacs-2020.6_CUDA10_SSE4/bin/gmx genrestr -fc 4000 4000 4000 -f ../run09/input/step5_input.gro -n ../run09/input/index.ndx -o ucp1_all_4000.itp
