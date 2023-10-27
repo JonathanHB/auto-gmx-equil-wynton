@@ -6,7 +6,8 @@ run_index = cwd.split("/")[-1][3:]
 input_folder = "input"
 output_folder = "run_scripts/" # the folder to which to output the generated scripts, not the folder for md output
 run_folder = "run_directory"
-mdpdir = "mdp-aac1-adp"
+mdpdir = "mdp-ucp1-nodnp"
+#"mdp-ucp1"
 
 if not os.path.isdir(output_folder):
 	os.mkdir(output_folder)
@@ -54,7 +55,7 @@ previous_sim = current_sim
 #Step 6.1-6.6: short equilibration segments with different conditions
 #mdp_suffix = '_equilibration.mdp'
 
-mdp_files = ["nvtcharmm36.mdp", "npt01charmm36.mdp",  "npt02charmm36.mdp",  "npt03charmm36.mdp",  "npt04charmm36.mdp",  "npt05charmm36.mdp",  "npt06charmm36.mdp",  
+mdp_files = ["nvtcharmm36.mdp", "npt01charmm36.mdp",  "npt02charmm36.mdp", "npt03charmm36.mdp",  "npt03charmm36.mdp",  "npt03charmm36.mdp", "npt03charmm36.mdp", "npt04charmm36.mdp",  "npt05charmm36.mdp",  "npt06charmm36.mdp",  
 	     "npt07charmm36.mdp", "npt07charmm36.mdp", "npt07charmm36.mdp",
 		 "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp", "npt08charmm36.mdp"]
 
