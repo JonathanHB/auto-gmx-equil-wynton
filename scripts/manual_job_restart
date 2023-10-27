@@ -1,0 +1,3 @@
+1. edit run_commands to remove completed commands
+2. remove incomplete files
+3. run qsub ../../scripts/launch_job_array.sh _run_number_with_leading_0_

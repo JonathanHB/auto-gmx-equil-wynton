@@ -1,0 +1,32 @@
+; minimization
+; charmm-gui recommended params for CHARMM36 membrane simulations with GROMACS
+
+; minimization restraints
+define              = -DPOSRES_MINIM
+
+; integrator
+integrator          = steep ; Algorithm (steep = steepest descent minimization)
+emtol               = 1000.0 ; Stop minimization when the maximum force < 1000.0 kJ/mol/nm
+emstep              = 0.001 ; Energy step size
+nsteps              = 500000 ; Maximum number of (minimization) steps to perform
+
+; output control
+nstxout             = 50 ; coordinates
+nstenergy           = 10 ; energy
+
+; nonbonded force parameters
+nstlist             = 20
+cutoff-scheme       = Verlet
+ns-type             = grid
+coulombtype         = PME
+pme-order           = 4
+fourierspacing      = 0.12 ; minimum, GROMACS scales this when using -tunepme (default on)
+rcoulomb            = 1.2 ; minimum, GROMACS scales this when using -tunepme (default on)
+vdwtype             = cutoff
+vdw-modifier        = Force-switch ; CHARMM requires Force-switch for vdw
+rvdw-switch         = 1.0 ; start vdw switching
+rvdw                = 1.2 ; finish vdw switching
+DispCorr            = no ; only needed for lipid monolayers
+
+; other options
+pbc                 = xyz
